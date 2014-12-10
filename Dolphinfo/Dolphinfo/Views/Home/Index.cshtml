@@ -1,0 +1,93 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" src="/Scripts/jquery-1.8.2.min.js"></script>
+    <title>DolphInfo</title>
+    <style>
+        .clickable {
+            cursor: pointer;
+        }
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; height:10%" class="noselect"> <a id="PlayButton" class="clickable" onclick="Play()">►</a> <a id="PauseButton" class="clickable" onclick="Pause()">▌▌</a> @System.Configuration.ConfigurationManager.AppSettings["ProjectName"] Status <a id="FastForwardButton" class="clickable" onclick="FastForward()">►►</a></h1>
+    <div id="ImageContent" style="text-align:center">
+        
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    var intervalVar;
+
+    function GetNextImage() {
+        var src = "/Home/NextImage?" + Math.random();
+        $("#ImageContent").html("<img src='"+src+"' style='max-height: 900px;'></img>");
+    }
+
+    function FastForward(){
+        if(intervalVar != null){
+            Pause();
+            Play();
+        }
+        GetNextImage();
+    }
+
+    function Pause(){
+        $("#PlayButton").show();
+        $("#PauseButton").hide();
+        clearInterval(intervalVar);
+        intervalVar = null;
+    }
+    
+    function Play(){
+        $("#PlayButton").hide();
+        $("#PauseButton").show();
+        intervalVar = setInterval(GetNextImage, @System.Configuration.ConfigurationManager.AppSettings["RefreshIntervalMilliseconds"]);
+    }
+
+    function checkKey(e) {
+        e = e || window.event;
+        if (e.keyCode == '39') {
+            FastForward();
+        }
+
+        if (e.keyCode == '80'){
+            if(intervalVar){
+                Pause();
+            }
+            else{
+                Play();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        GetNextImage();
+        Play();
+
+        document.onkeydown = checkKey;
+
+        
+    });
+
+
+
+</script>
