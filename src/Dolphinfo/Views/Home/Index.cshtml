@@ -23,11 +23,30 @@
             -ms-user-select: none;
             user-select: none;
         }
-
+        .screenTitle {
+            padding: 0em 2em;
+        }
+        .screenLogo {
+            height: 1.5em;
+        }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; height:10%" class="noselect"> <a id="PlayButton" class="clickable" onclick="Play()">►</a> <a id="PauseButton" class="clickable" onclick="Pause()">▌▌</a> @System.Configuration.ConfigurationManager.AppSettings["ProjectName"] Status <a id="FastForwardButton" class="clickable" onclick="FastForward()">►►</a></h1>
+    <h1 style="text-align: center; height:10%" class="noselect">
+        <a id="PlayButton" class="clickable" onclick="Play()">►</a>
+        <a id="PauseButton" class="clickable" onclick="Pause()">▌▌</a>
+        <span id="ScreenTitle" class="screenTitle">
+            @if (System.Configuration.ConfigurationManager.AppSettings["StatusScreenShowLogo"].AsBool())
+            {
+                <img id="ScreenLogo" class="screenLogo" src="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenLogoPath"]" alt="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenTitle"]" />
+            }
+            else
+            {
+                @System.Configuration.ConfigurationManager.AppSettings["StatusScreenTitle"]
+            }
+        </span>
+        <a id="FastForwardButton" class="clickable" onclick="FastForward()">►►</a>
+    </h1>
     <div id="ImageContent" style="text-align:center">
         
     </div>
