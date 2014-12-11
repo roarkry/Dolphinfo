@@ -10,8 +10,14 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <_PublishTargetUrl>ftp://192.168.100.61</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="Assets/Images/DEHQ_Today_Logo.png">
+      <publishTime>12/11/2014 12:01:50</publishTime>
+    </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>12/11/2014 11:38:45</publishTime>
+    </File>
+    <File Include="bin/Assets/Images/DEHQ_Today_Logo.png">
+      <publishTime>12/11/2014 12:01:50</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
       <publishTime>12/11/2014 11:38:43</publishTime>
@@ -170,10 +176,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2014 11:34:55</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/11/2014 11:34:55</publishTime>
+      <publishTime>12/11/2014 12:01:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/11/2014 11:41:11</publishTime>
+      <publishTime>12/11/2014 12:35:29</publishTime>
     </File>
   </ItemGroup>
 </Project>

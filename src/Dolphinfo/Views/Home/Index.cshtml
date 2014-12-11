@@ -55,6 +55,7 @@
 
 <script type="text/javascript">
     var intervalVar;
+    var serverGuid;
 
     function GetNextImage() {
         var src = "/Home/NextImage?" + Math.random();
@@ -98,15 +99,34 @@
         }
     }
 
+    function CheckForServerUpdate(){
+        var request = $.ajax({
+            type: "GET",
+            url: "/api/version",
+            accepts: "text/json"
+        });
+
+        request.done(function(data){
+            if(serverGuid){
+                if(data != serverGuid){
+                    location.reload();
+                }
+            }
+            else{
+                serverGuid = data;
+            }
+        });
+    }
+
     $(document).ready(function () {
         GetNextImage();
         Play();
 
         document.onkeydown = checkKey;
-
         
+        //check if code on server has been updated every minute
+        setInterval(CheckForServerUpdate, 60*1000);
+        CheckForServerUpdate();
     });
-
-
 
 </script>

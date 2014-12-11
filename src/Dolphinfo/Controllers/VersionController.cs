@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,12 +8,11 @@ using System.Web.Http;
 
 namespace Dolphinfo.Controllers
 {
-    public class ValuesController : ApiController
+    public class VersionController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return ConfigurationManager.AppSettings["BuildIdentifier"];
         }
     }
 }
