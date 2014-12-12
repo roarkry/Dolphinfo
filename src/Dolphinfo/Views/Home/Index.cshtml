@@ -29,24 +29,29 @@
         .screenLogo {
             height: 1.5em;
         }
+        body {
+            font-family:Arial;
+        }
     </style>
 </head>
 <body>
     <h1 style="text-align: center; height:10%" class="noselect">
-        <a id="PlayButton" class="clickable" onclick="Play()">►</a>
-        <a id="PauseButton" class="clickable" onclick="Pause()">▌▌</a>
         <span id="ScreenTitle" class="screenTitle">
             @if (System.Configuration.ConfigurationManager.AppSettings["StatusScreenShowLogo"].AsBool())
             {
-                <img id="ScreenLogo" class="screenLogo" src="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenLogoPath"]" alt="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenTitle"]" />
+                <img id="ScreenLogo" style="margin-bottom: -14px;" class="screenLogo" src="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenLogoPath"]" alt="@System.Configuration.ConfigurationManager.AppSettings["StatusScreenTitle"]" />
             }
             else
             {
                 @System.Configuration.ConfigurationManager.AppSettings["StatusScreenTitle"]
             }
         </span>
+        <a id="RewindButton" class="clickable" onclick="Rewind()">◄◄</a> &nbsp; 
+        <a id="PlayButton" class="clickable" onclick="Play()">►</a>
+        <a id="PauseButton" class="clickable" onclick="Pause()">▌▌</a> &nbsp;
         <a id="FastForwardButton" class="clickable" onclick="FastForward()">►►</a>
     </h1>
+    <div id="ImageText" style="text-align:center"></div>
     <div id="ImageContent" style="text-align:center">
         
     </div>
@@ -54,12 +59,64 @@
 </html>
 
 <script type="text/javascript">
+    //TODO: Put this jscript into a class or something instead of just a bunch of functions
+    
     var intervalVar;
     var serverGuid;
+    var fileNames = [];
+    var currentPosition = 0;
+
+    function ManipulateFileNameForText(fileName){
+        return fileName.substr(0, fileName.length - 4);
+    }
+
+    function SetImage(){
+        var fileName = fileNames[currentPosition];
+        var src = "/api/Files?fileName=" + fileName;
+        $("#ImageContent").html("<img src='"+src+"' style='max-height: 900px;'></img>");
+        $("#ImageText").text(ManipulateFileNameForText(fileName));
+    }
+
+    function DecrementPosition(){
+        currentPosition--;
+        if(currentPosition < 0){
+            currentPosition = fileNames.length - 1;
+        }
+
+        SetImage();
+    }
+
+    function IncrementPosition(){
+        currentPosition++;
+        if(currentPosition >= fileNames.length){
+            currentPosition = 0;
+        }
+
+        SetImage();
+    }
+
+    function UpdateFileNames(onSuccess){
+        var request = $.ajax({
+            type: "GET",
+            url: "/api/files",
+            accepts: "text/json"
+        });
+
+        request.done(function(data){
+            fileNames = data;
+
+            if(onSuccess){
+                onSuccess();
+            }
+        });
+    }
+
+    function GetPreviousImage(){
+        UpdateFileNames(DecrementPosition);
+    }
 
     function GetNextImage() {
-        var src = "/Home/NextImage?" + Math.random();
-        $("#ImageContent").html("<img src='"+src+"' style='max-height: 900px;'></img>");
+        UpdateFileNames(IncrementPosition);
     }
 
     function FastForward(){
@@ -68,6 +125,14 @@
             Play();
         }
         GetNextImage();
+    }
+
+    function Rewind(){
+        if(intervalVar != null){
+            Pause();
+            Play();
+        }
+        GetPreviousImage();
     }
 
     function Pause(){
@@ -85,11 +150,16 @@
 
     function checkKey(e) {
         e = e || window.event;
+        
+        if (e.keyCode == '37') {
+            Rewind();
+        }
+        
         if (e.keyCode == '39') {
             FastForward();
         }
 
-        if (e.keyCode == '80'){
+        if (e.keyCode == '80' || e.keyCode == '32'){
             if(intervalVar){
                 Pause();
             }
@@ -99,6 +169,7 @@
         }
     }
 
+    //checks if the server version has changed
     function CheckForServerUpdate(){
         var request = $.ajax({
             type: "GET",
