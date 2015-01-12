@@ -73,7 +73,7 @@
     function SetImage(){
         var fileName = fileNames[currentPosition];
         var src = "/api/Files?fileName=" + fileName;
-        $("#ImageContent").html("<img src='"+src+"' style='max-height: 900px;'></img>");
+        $("#ImageContent").html("<img src='"+src+"' style='max-height: 900px; max-width:95%'></img>");
         $("#ImageText").text(ManipulateFileNameForText(fileName));
     }
 
@@ -151,15 +151,17 @@
     function checkKey(e) {
         e = e || window.event;
         
-        if (e.keyCode == '37') {
+        key = Number(e.keyCode);
+
+        if (key == 37) {
             Rewind();
         }
         
-        if (e.keyCode == '39') {
+        if (key == 39) {
             FastForward();
         }
 
-        if (e.keyCode == '80' || e.keyCode == '32'){
+        if (key == 80 || key == 32){
             if(intervalVar){
                 Pause();
             }

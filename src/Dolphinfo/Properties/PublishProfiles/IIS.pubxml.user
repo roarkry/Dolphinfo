@@ -7,7 +7,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAQ7c+E5yw4Uq2xphQqkRCcAAAAAACAAAAAAADZgAAwAAAABAAAADXjSVPzOqC724T8w0+tAlaAAAAAASAAACgAAAAEAAAAJduC+NjW1zdO4PSDEbISCoYAAAAOtCd4DCBS0hvzpCdnlfGFZ3JsX1KqU5qFAAAAGF3EFbdI9bhBq2Vm+qWpb3wXD+1</EncryptedPassword>
-    <_PublishTargetUrl>ftp://192.168.100.61</_PublishTargetUrl>
+    <_PublishTargetUrl>ftp://192.168.100.139</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Assets/Images/DEHQ_Today_Logo.png">
@@ -29,7 +29,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2014 11:38:42</publishTime>
     </File>
     <File Include="bin/Dolphinfo.dll">
-      <publishTime>12/11/2014 11:41:08</publishTime>
+      <publishTime>01/12/2015 12:38:50</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>12/11/2014 11:38:47</publishTime>
@@ -102,6 +102,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/ru/System.Spatial.resources.dll">
       <publishTime>12/11/2014 11:38:42</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.dll">
+      <publishTime>07/09/2012 02:40:10</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>12/11/2014 11:38:38</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.WebRequest.dll">
+      <publishTime>07/09/2012 02:40:10</publishTime>
     </File>
     <File Include="bin/System.Spatial.dll">
       <publishTime>12/11/2014 11:38:42</publishTime>
@@ -176,10 +185,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/11/2014 11:34:55</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/11/2014 12:01:50</publishTime>
+      <publishTime>01/12/2015 13:07:43</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/11/2014 12:35:29</publishTime>
+      <publishTime>01/12/2015 13:07:55</publishTime>
     </File>
   </ItemGroup>
 </Project>
